@@ -11,7 +11,7 @@ public class Basic {
     public WebDriver driver;
 
     @BeforeClass
-    public void beforeTest() {
+    public void beforeTest() throws Exception {
 
         // Dacă rulează în GitHub Actions → folosește Selenoid
         if (System.getProperty("env", "local").equals("github")) {
