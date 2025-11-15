@@ -13,13 +13,16 @@ public class Basic {
     @BeforeClass
     public void beforeTest() throws Exception {
 
-        // Dacă rulează în GitHub Actions → folosește Selenoid
-        if (System.getProperty("env", "local").equals("github")) {
+        String env = System.getProperty("env", "local");
+        System.out.println(">>> Current ENV = " + env);
+
+        // Dacă rulează în GitHub Actions → SELENOID
+        if (env.equals("github")) {
             System.out.println(">>> Running tests on SELENOID (GitHub Actions)");
             driver = DriverSelenoid.setup();
         }
 
-        // Dacă rulează local → Chrome obișnuit
+        // Dacă rulează local → Chrome normal
         else {
             System.out.println(">>> Running tests LOCALLY");
             driver = Driver1.setup();
