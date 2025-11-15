@@ -19,7 +19,7 @@ public class LoginPom extends BasicPom {
 
     public LoginPom(WebDriver driver) {
         this.driver = driver;
-        js = (JavascriptExecutor) driver;
+        this.js = (JavascriptExecutor) driver;
         PageFactory.initElements(driver, this);
     }
 
@@ -33,12 +33,18 @@ public class LoginPom extends BasicPom {
         userName.sendKeys(userNameParam);
     }
 
- 
     public void setUsername(String firstName) {
         setUserName(firstName);
     }
 
     public void clickLogin() {
-        login.click();
+        // 1. Elimină toate iframe-urile (reclame)
+        js.executeScript("document.querySelectorAll('iframe').forEach(e => e.remove());");
+
+        // 2. Adduce butonul în view
+        js.executeScript("arguments[0].scrollIntoView(true);", login);
+
+        // 3. Forțează click-ul (previne ElementClickIntercepted)
+        js.executeScript("arguments[0].click();", login);
     }
 }
